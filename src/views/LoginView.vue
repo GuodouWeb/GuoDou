@@ -2,7 +2,7 @@
   <div class="container">
     <div class="forms-container">
       <div class="signin-signup">
-        <form class="sign-in-form">
+        <form action="#"  class="sign-in-form">
           <h2 class="title">登录</h2>
           <div class="input-field">
             <i class="fas fa-user"></i>
@@ -12,7 +12,7 @@
             <i class="fas fa-lock"></i>
             <input v-model="password" type="password" placeholder="密码" />
           </div>
-          <input type="submit" value="立即登录" class="btn solid" @click="login"/>
+          <button class="btn solid" @click="login" type="button">立即登录</button>
           <p class="social-text">通过其他方式</p>
           <div class="social-media">
             <a href="#" class="social-icon">
@@ -33,14 +33,15 @@
             <input type="text" placeholder="用户名" />
           </div>
           <div class="input-field">
-            <i class="fas fa-envelope"></i>
-            <input type="email" placeholder="邮箱" />
-          </div>
-          <div class="input-field">
             <i class="fas fa-lock"></i>
             <input type="password" placeholder="密码" />
           </div>
-          <input type="submit" class="btn" value="立即注册" />
+          <div class="input-field">
+            <i class="fas fa-lock"></i>
+            <input type="password" placeholder="确认密码" />
+          </div>
+          <button class="btn solid" type="button">立即注册</button>
+
           <p class="social-text">通过其他方式</p>
           <div class="social-media">
             <a href="#" class="social-icon">
@@ -88,7 +89,8 @@
 
 <script>
 import axios from 'axios'
-
+import { ElMessage } from 'element-plus'
+import {addevent} from '@/static/js/login/app'
 const {ref} = require("vue");
 export default {
   name: 'LoginView',
@@ -109,15 +111,39 @@ export default {
   },
   methods: {
     login(){
+      if(this.username === "" || this.password === ""){
+        ElMessage({
+          showClose: true,
+          message: "账号或者密码不能为空",
+          type: 'warning'
+        })
+        return
+      }
       axios.post('http://127.0.0.1:8090/get/login',
           {"username": this.username, "password":this.password},
       ).then(res => {
         console.log(res)
+        if(res.data.code === 200){
+          this.$router.push({name: 'about'})
+        }else{
+          ElMessage({
+            showClose: true,
+            message: res.data.msg,
+            type: 'warning'
+          })
+        }
       }).catch(err => {
-        console.log(err)
+        ElMessage({
+          showClose: true,
+          message: err,
+          type: 'error'
+        })
       })
     },
   },
+  mounted() {
+    addevent()
+  }
 }
 </script>
 
