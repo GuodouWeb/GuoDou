@@ -29,6 +29,7 @@ input {
 
 .signin-signup {
   position: absolute;
+  height: 500px;
   top: 50%;
   transform: translate(-50%, -50%);
   left: 75%;
@@ -65,7 +66,18 @@ form.sign-in-form {
   color: #444;
   margin-bottom: 10px;
 }
-
+.login-form{
+  width: 300px;
+  height: 450px;
+  max-width: 380px;
+  border: #333333;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  box-shadow:  1px 5px 10px #909090;
+}
 .input-field {
   max-width: 380px;
   width: 100%;
@@ -74,11 +86,30 @@ form.sign-in-form {
   height: 45px;
   border-radius: 55px;
   display: grid;
-  grid-template-columns: 15% 85%;
+  grid-template-columns: 10% 90%;
   padding: 0 0.4rem;
   position: relative;
 }
 
+.el-input-field {
+  max-width: 280px;
+  width: 75%;
+  margin: 10px 0;
+  height: 45px;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  grid-template-columns: 15% 85%;
+  padding: 0 0.4rem;
+  position: relative;
+}
+.el-input-field img{
+  align-content: center;
+  margin-top: 5px;
+}
+.el-input-password {
+  max-height: 31px;
+}
 .input-field i {
   text-align: center;
   line-height: 55px;
@@ -96,6 +127,7 @@ form.sign-in-form {
   font-size: 1.1rem;
   color: #333;
 }
+
 
 .input-field input::placeholder {
   color: #aaa;
