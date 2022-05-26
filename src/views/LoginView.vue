@@ -3,45 +3,46 @@
     <div class="forms-container">
       <div class="signin-signup">
         <form action="#"  class="sign-in-form">
-          <div class="login-form">
-            <h2 class="title">登录</h2>
-            <div class="el-input-field">
-              <img :src=defaultImg.user class="icon" alt="" />
-              <el-autocomplete
-                v-model="account.username"
-                :fetch-suggestions="querySearch"
-                :trigger-on-focus="false"
-                clearable
-                class="inline-input"
-                placeholder="请输入账号"
-                @select="handleSelect"
+          <h2 class="title">登录</h2>
+          <div class="el-input-field">
+            <img :src=defaultImg.user class="icon" alt="" />
+            <el-autocomplete
+              v-model="account.username"
+              :fetch-suggestions="querySearch"
+              :trigger-on-focus="false"
+              clearable
+              class="inline-input"
+              placeholder="请输入账号"
+              @select="handleSelect"
 
-            />
-            </div>
-            <div class="el-input-field">
-              <img :src=defaultImg.security class="icon" alt="" />
-              <el-input
-                v-model="account.password"
-                placeholder="请输入密码"
-                type="password"
-                clearable
-                class="el-input-password"
-            >
-            </el-input>
-            </div>
-            <el-button class="btn solid" type="primary" @click="login_btn" plain>立即登录</el-button>
-            <p class="social-text">通过其他方式</p>
-            <div class="social-media">
-              <a href="#" class="social-icon">
-                <img :src=defaultImg.QQ class="icon" alt="" />
-              </a>
-              <a href="#" class="social-icon">
-                <img :src=defaultImg.wechat class="icon" alt="" />
-              </a>
-              <a href="#" class="social-icon">
-                <img :src=defaultImg.github class="icon" alt="" />
-              </a>
-            </div>
+          />
+          </div>
+          <div class="el-input-field">
+            <img :src=defaultImg.security class="icon" alt="" />
+            <el-input
+              v-model="account.password"
+              placeholder="请输入密码"
+              type="password"
+              clearable
+              class="el-input-password"
+              show-password
+          >
+          </el-input>
+          </div>
+          <div class="el-login-btn">
+            <el-button class="btn solid" type="primary" @click="login_btn" round>立即登录</el-button>
+          </div>
+          <p class="social-text">通过其他方式</p>
+          <div class="social-media">
+            <a href="#" class="social-icon">
+              <img :src=defaultImg.QQ class="icon" alt="" />
+            </a>
+            <a href="#" class="social-icon">
+              <img :src=defaultImg.wechat class="icon" alt="" />
+            </a>
+            <a href="#" class="social-icon">
+              <img :src=defaultImg.github class="icon" alt="" />
+            </a>
           </div>
         </form>
         <form action="#" class="sign-up-form">
@@ -79,7 +80,9 @@
                   show-password
               ></el-input>
             </div>
-            <el-button class="btn solid" type="primary" @click="register_btn" round>立即登录</el-button>
+            <div class="el-login-btn">
+              <el-button class="btn solid" type="primary" @click="register_btn" round>立即登录</el-button>
+            </div>
             <p class="social-text">通过其他方式</p>
             <div class="social-media">
               <a href="#" class="social-icon">
@@ -296,7 +299,11 @@ export default {
               }
             }
           } catch (error) {
-              console.log(error)
+          ElMessage({
+            showClose: true,
+            message: error,
+            type: 'error'
+          })
             }
           }
     },
@@ -319,20 +326,75 @@ export default {
 
 <style scoped>
 @import "../static/css/login/style.css";
->>>.el-input__wrapper {
-  box-shadow: 0 0 0 1px #66b1ff inset;
-  max-width: 150px;
-  margin: 0 5px;
-  padding: 1px 15px;
-}
->>>.el-input__wrapper:hover{
-  box-shadow:0 0 0 1px #3375b9 inset
-}
-.login-form >>> .btn{
-  width: 150px;
-  margin-left: 10px;
+
+.login-form{
+  width: 300px;
+  height: 450px;
+  max-width: 380px;
+  border: #333333;
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  box-shadow:  1px 5px 10px #909090;
 }
 
+>>>.el-input__inner{
+  margin-left: -10px;
+}
+
+>>>.el-input__wrapper {
+  max-width: 320px;
+  margin: 0 5px;
+  padding: 1px 15px;
+  border: none;
+  box-shadow: none;
+}
+
+>>>.el-input__wrapper:hover{
+  box-shadow: none;
+}
+
+>>>.el-input__wrapper.is-focus{
+  box-shadow: none;
+}
+
+.el-input-field{
+  border-radius: 24px;
+  box-shadow: 0 0 0 1px #aaaaaa inset;
+  max-width: 320px;
+  width: 75%;
+  margin: 10px 0;
+  height: 35px;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  grid-template-columns: 10% 90%;
+  padding: 0 0.4rem;
+  position: relative;
+}
+
+.el-input-field:hover{
+  box-shadow: 0 0 0 1px #66b1ff inset;
+}
+
+.el-input-field img{
+  align-content: center;
+  margin-top: 5px;
+  margin-left: 5px;
+}
+
+.el-login-btn{
+  display: flex;
+  width: 75%;
+  justify-content: center;
+  align-items: center;
+}
+
+.el-login-btn >>> .btn{
+  width: 320px;
+}
 
 </style>
 
