@@ -194,7 +194,7 @@ function login_btn(){
         }
         window.localStorage.setItem("account", value)
       }
-      this.$router.push({name: 'about'})
+      this.$router.push({name: 'porject'})
     }else{
       ElMessage({
         showClose: true,
