@@ -1,14 +1,11 @@
 <template>
   <div class="common-layout">
     <el-container>
-      <el-aside>
         <NavigationBar :fatherMethod="SetElementAttr"/>
-      </el-aside>
       <el-container>
         <el-header>Header</el-header>
         <el-main>
           <div class="div-el-main" :style="{width: el_mianWidth +'px'}">
-            <button @click="routerPuth">点我</button>
             <router-view></router-view>
           </div>
         </el-main>
@@ -21,8 +18,7 @@
 <script>
 import NavigationBar from "@/components/login/NavigationBar"
 const {ref} = require("vue");
-
-const el_mianWidth = ref(1500)
+const el_mianWidth = ref(1400)
 export default {
   name: "WorkbenchView",
   components:{
@@ -36,14 +32,14 @@ export default {
   methods:{
     SetElementAttr(value) {
       if (value) {
-        this.el_mianWidth = 1500
+        this.el_mianWidth = 1400
         return !value
       }
-      this.el_mianWidth = 1700
+      this.el_mianWidth = 1600
       return !value
     },
     routerPuth(){
-      this.$router.push("about")
+      this.$router.push("postman")
     }
   }
 }
@@ -53,23 +49,21 @@ export default {
 .common-layout{
   max-height: 600px;
 }
+.aside{
+  width: 200px;
+}
 >>>.el-main{
+  min-height: 700px;
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 .common-layout >>> .el-container{
   height: 100%;
 }
-
 .div-el-main{
   transition: all 0.5s;
   align-items: center;
   justify-content: center
-}
-
-.common-layout >>> .el-aside{
-  width: 100%;
 }
 
 </style>

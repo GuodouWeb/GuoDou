@@ -3,6 +3,8 @@
       default-active="2"
       class="el-menu-vertical-demo"
       :collapse="isCollapse"
+      width="200 px"
+      router="ture"
   >
     <div class="div-el-menu-title">
       <el-button type="primary" plain @click="btn">{{ arrow }}</el-button>
@@ -37,9 +39,9 @@
         <el-icon><document /></el-icon>
         <template #title>Navigator Three</template>
       </el-menu-item>
-      <el-menu-item index="4">
+      <el-menu-item index="postman">
         <el-icon><setting /></el-icon>
-        <template #title>Navigator Four</template>
+        <template #title>PostMan</template>
       </el-menu-item>
     </div>
   </el-menu>
@@ -47,14 +49,11 @@
 </template>
 
 <script>
-
 import { ref } from 'vue'
 import { Document, Menu as IconMenu, Location, Setting} from '@element-plus/icons-vue'
-
 // eslint-disable-next-line no-undef
 const isCollapse = ref(false)
 const arrow = ref("<<<")
-
 export default {
   name: "NavigationBar",
   components:{
@@ -85,6 +84,17 @@ export default {
 </script>
 
 <style scoped>
+
+:deep(.el-menu) {
+  border-right: solid 1px var(--el-menu-border-color);
+  list-style: none;
+  position: relative;
+  margin: 0;
+  padding-left: 0;
+  background-color: var(--el-menu-bg-color);
+  box-sizing: border-box;
+  width: 200px;
+}
 .div-el-menu-title{
   height: 50px;
   background-color: #001529;
@@ -104,14 +114,25 @@ export default {
   background-color: #001529;
   color: #f0f0f0;
 }
-
+>>> .el-sub-menu__title:hover{
+  background-color: #26619e;
+  color: #409eff;
+}
 >>> .el-menu-item-group__title{
   background-color: #001529;
   color: #f0f0f0;
 }
+>>> .el-menu-item-group__title:hover{
+  background-color: #26619e;
+  color: #409eff;
+}
 >>> .el-menu-item{
   background-color: #001529;
   color: #f0f0f0;
+}
+>>> .el-menu-item:hover{
+  background-color: #26619e;
+  color: #409eff;
 }
 .div-el-menu{
   width: 100%;

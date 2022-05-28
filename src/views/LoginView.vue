@@ -194,7 +194,7 @@ function login_btn(){
         }
         window.localStorage.setItem("account", value)
       }
-      this.$router.push({name: 'porject'})
+      this.$router.push({name: 'project'})
     }else{
       ElMessage({
         showClose: true,
@@ -231,7 +231,7 @@ function register_btn(){
   ).then(res => {
     console.log(res)
     if(res.data.code === 200){
-      this.$router.push({name: 'about'})
+      this.$router.push({name: 'project'})
     }else{
       ElMessage({
         showClose: true,
@@ -340,11 +340,11 @@ export default {
   box-shadow:  1px 5px 10px #909090;
 }
 
->>>.el-input__inner{
+:deep(.el-input__inner){
   margin-left: -10px;
 }
 
->>>.el-input__wrapper {
+:deep(.el-input__wrapper) {
   max-width: 320px;
   margin: 0 5px;
   padding: 1px 15px;
@@ -352,11 +352,11 @@ export default {
   box-shadow: none;
 }
 
->>>.el-input__wrapper:hover{
+:deep(.el-input__wrapper):hover{
   box-shadow: none;
 }
 
->>>.el-input__wrapper.is-focus{
+:deep(.el-input__wrapper).is-focus{
   box-shadow: none;
 }
 
@@ -392,7 +392,7 @@ export default {
   align-items: center;
 }
 
-.el-login-btn >>> .btn{
+.el-login-btn :deep(.btn){
   width: 320px;
 }
 
