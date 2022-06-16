@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style type="text/css">
+        .play{
+            width: 240px;
+            height: 135px;
+        }
+        .play_ico{
+            display: none;
+        }
+        .play_back{
+            display: none;
+        }
+        .play:hover .play_ico{
+            display: block;
+            background-image: url(ico_play.png);
+            height: 47px;
+            width: 62px;
+            background-position: 0px -58px;
+            position: absolute;
+            left: 89px;
+            top: 50px;
+            z-index: 1;
+        }
+        .play:hover .play_back{
+            display: block;
+            background: black;
+            width: 240px;
+            height: 135px;
+            position: absolute;
+            top: 8px;
+            left: 9px;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+<div class="play">
+    <img src="src/static/img/postman/爱.svg">
+    <div class="play_ico">
+
+    </div>
+    <div class="play_back">
+
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+
+</script>
+</html>
