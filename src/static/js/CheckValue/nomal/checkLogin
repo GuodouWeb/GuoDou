@@ -1,0 +1,25 @@
+// 手机号码
+function phoneNumberCheck(phoneNumber){
+    let rep = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/
+    if (rep.exec(phoneNumber)){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+function accountCheck(account){
+    let rep = /^[a-zA-Z]\w{5,17}$/
+    if (rep.exec(account)){
+        return true;
+    }else{
+        return false;
+    }
+}
+
+
+
+export {
+    phoneNumberCheck,
+    accountCheck,
+};
