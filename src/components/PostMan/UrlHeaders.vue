@@ -41,7 +41,7 @@ import {
   rq_info,
   Delete_HeadersParam,
   Add_HeadersParam,
-} from "@/components/PostMan/RequsetSettings.js";
+} from "@/static/js/PostMan";
 
 const imgPath = {
   params_background: require("@/static/img/postman/订阅.svg"),

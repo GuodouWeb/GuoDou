@@ -41,10 +41,10 @@
 <script setup>
 import {
   rq_info,
-  Set_Url,
   Delet_Param,
   Add_Param,
-} from "@/components/PostMan/RequsetSettings.js";
+  Set_Url
+} from "@/static/js/PostMan";
 
 const imgPath = {
   params_background: require("@/static/img/postman/爱.svg"),
@@ -54,7 +54,7 @@ const imgPath = {
 <style scoped>
 .title {
   height: 20px;
-  margin: 20px 0 0 0;
+  margin: 10px 0 0 0;
   text-align: left;
 }
 .title p {
@@ -87,8 +87,8 @@ form {
   text-align: center;
 }
 .params-img {
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
 }
 form .params {
   width: 100%;
@@ -110,7 +110,7 @@ form .params :deep(.el-input__wrapper) {
 
 .add-parmas {
   width: 80%;
-  margin: 0 0 0 20px;
+  margin: 0 0 0 10px;
   justify-content: center;
   display: flex;
 }

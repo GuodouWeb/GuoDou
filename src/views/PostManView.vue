@@ -5,7 +5,7 @@
     </div>
     <div class="route-search-box">
       <div class="method">
-        <el-select v-model="rq_method" placeholder="Select">
+        <el-select v-model="rq_info.method" placeholder="请求方式">
           <el-option
             v-for="item in rq_method_value"
             :key="item.value"
@@ -25,7 +25,7 @@
           @input="Get_InputParams"
         ></el-input>
       </div>
-      <el-button type="primary" @click="postman">
+      <el-button type="primary" @click="sendBtn(proxy)">
         Send<el-icon class="el-icon--right"><Upload /></el-icon>
       </el-button>
     </div>
@@ -72,16 +72,19 @@
 import { ref } from "@vue/reactivity";
 import { Upload } from "@element-plus/icons-vue";
 import {
+  Get_InputParams,
   rq_info,
   res_info,
-  Get_InputParams,
-  Set_res_info
-} from "@/static/js/PostMan/PostManView/PostManData";
-import UrlParmas from "@/components/PostMan/UrlParmas.vue";
-import UrlHeaders from "@/components/PostMan/UrlHeaders.vue";
-import UrlBody from "@/components/PostMan/UrlBody.vue";
+  sendBtn
+} from "@/static/js/PostMan";
+import {
+  UrlParmas,
+  UrlHeaders,
+  UrlBody,
+  opts
+} from "@/components/PostMan";
+
 import MonacoEditor from "@/components/Editor/monaco";
-import {opts} from "@/components/PostMan/MonacoEditorConfig";
 import axios from "axios";
 import {getCurrentInstance} from "vue";
 import {ElMessage} from "element-plus";
@@ -89,15 +92,15 @@ import {ElMessage} from "element-plus";
 const rq_method = ref("GET");
 const rq_method_value = [
   {
-    value: "GET ",
+    value: "GET",
     label: "GET",
   },
   {
-    value: "POST ",
+    value: "POST",
     label: "POST",
   },
   {
-    value: "PUSH ",
+    value: "PUSH",
     label: "PUSH",
   },
 ];
@@ -112,6 +115,8 @@ const res_SetInpage = {
   Body: "Body",
 };
 const {proxy} = getCurrentInstance()
+
+
 function postman(){
   rq_info.data = proxy.$refs.urlBody.getValue()
   axios
@@ -119,9 +124,6 @@ function postman(){
       .then((res)=>{
         res_info.isShow=true
         console.log(res)
-        Set_res_info(
-            res.data.code,
-        )
         proxy.$refs.res_Editor.setJSONVal(JSON.stringify(res.data))
       })
       .catch(err=>{
@@ -158,12 +160,12 @@ function postman(){
   border-width: 0 0 1px 0;
 }
 .postman-title p {
-  padding: 0 0 0 30px;
+  padding: 0 0 0 80px;
   font-family: "Microsoft YaHei",serif;
   font-weight: bold;
 }
 .route-search-box {
-  padding: 0 30px 0;
+  padding: 0 80px 0;
   justify-content: left;
   display: flex;
   height: 50px;
@@ -179,7 +181,7 @@ function postman(){
 }
 .route-search-box .div-el-input {
   justify-content: center;
-  margin: 0 30px 0 0;
+  margin: 0 80px 0 0;
   width: 70%;
 }
 .route-search-box :deep(.el-button) {
@@ -192,11 +194,12 @@ function postman(){
 .rq-infopage-seclet {
   display: flex;
   justify-content: left;
-  margin-left: 30px;
+  margin-left: 80px;
 }
 .rq-param {
   justify-content: left;
-  margin-left: 30px;
+  margin-left: 80px;
+  margin-bottom: 20px;
 }
 .rq-response{
   margin-top: 10px;
@@ -204,14 +207,16 @@ function postman(){
   display: block;
 }
 .rq-response .res-MonacoEditor{
-  margin-left: 30px;
+  max-width: 1220px;
+  margin-left: 80px;
   margin-top: 10px;
   margin-right: 50px;
   border:1px solid #bbb7b7
 }
 .res-infopage-seclet{
   display: flex;
-  margin-left: 30px;
+  max-width: 1200px;
+  margin-left: 80px;
   margin-right: 50px;
   justify-content: left;
   position: relative

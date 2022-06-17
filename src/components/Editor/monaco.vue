@@ -2,7 +2,7 @@
   <div
       ref="container"
       class="monaco-editor"
-      :style="`height: ${height}px`"
+      :style="`height: ${height}px; max-width:1200px`"
       style="text-align: left"
   ></div>
 </template>

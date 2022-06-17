@@ -11,9 +11,9 @@
           </div>
         </el-header>
         <el-main>
-          <div class="div-el-main" >
-            <router-view></router-view>
-          </div>
+            <div class="div-el-main" >
+                <router-view></router-view>
+            </div>
         </el-main>
         <el-footer>Footer</el-footer>
       </el-container>
@@ -38,14 +38,17 @@ function btn() {
 
 <style scoped>
 .common-layout {
-  max-height: 700px;
+  min-height: 800px;
+  height: 100%;
   display: flex;
 }
+
 :deep(.el-aside) {
-  height: 1000px;
+  height: 100%;
+  min-height: 851px;
   background-color: #001529;
   transition: all 0.3s;
-  display: inline-table;
+  display: flex;
 }
 :deep(.el-aside):hover .navigationBar .div-el-menu-title div{
   display: inline;
@@ -59,4 +62,5 @@ function btn() {
   align-items: center;
   justify-content: center;
 }
+
 </style>

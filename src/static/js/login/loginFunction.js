@@ -1,7 +1,6 @@
 import {ElMessage} from "element-plus";
 import {account, register} from "@/static/js/login/loginData";
-import {login, register as reg} from "@/services/login"
-import axios from "axios";
+import {user, register as reg} from "@/services/user"
 
 /*
 获取本地缓存数据
@@ -18,7 +17,6 @@ function getLocalStorageAccount() {
     }
     return loadAll;
 }
-
 /**
  * 输入框自动补全
  * @param queryString
@@ -70,6 +68,21 @@ function querySearch(queryString, cb) {
     }
 }
 
+function setLocalStorageAccount(res, router, username) {
+    if (!window.localStorage.getItem("account")) {
+        window.localStorage.setItem("account", username);
+    } else {
+        console.log(username)
+        let value = window.localStorage.getItem("account").split(",");
+        if (value.indexOf(username) < 0) {
+            value.push(username);
+        }
+        window.localStorage.setItem("userInfo", JSON.stringify(res.data))
+        window.localStorage.setItem("account", value.toString());
+    }
+    router.push( "project" )
+}
+
 /**
  * 登录
  */
@@ -82,22 +95,12 @@ function login_btn(router) {
         });
         return;
     }
-    login({
+    user({
         username: account.username,
         password: account.password,
     }).then((res) => {
         if (res.data.code === 200) {
-            if (!window.localStorage.getItem("account")) {
-                window.localStorage.setItem("account", account.username);
-            } else {
-                let value = window.localStorage.getItem("account").split(",");
-                if (value.indexOf(account.username) < 0) {
-                    value.push(account.username);
-                }
-                window.localStorage.setItem("userInfo", JSON.stringify(res.data))
-                window.localStorage.setItem("account", value);
-            }
-            router.push( "project" );
+            setLocalStorageAccount(res, router, account.username)
         } else {
             ElMessage({
                 showClose: true,
@@ -151,17 +154,7 @@ function register_btn(router) {
         password: register.password,})
         .then((res) => {
             if (res.data.code === 200) {
-                if (!window.localStorage.getItem("account")) {
-                    window.localStorage.setItem("account", account.username);
-                } else {
-                    let value = window.localStorage.getItem("account").split(",");
-                    if (value.indexOf(register.username) < 0) {
-                        value.push(register.username);
-                    }
-                    window.localStorage.setItem("userInfo", JSON.stringify(res.data))
-                    window.localStorage.setItem("account", value);
-                }
-                router.push({ name: "project" });
+                setLocalStorageAccount(res, router, register.username)
             } else {
                 ElMessage({
                     showClose: true,

@@ -149,6 +149,7 @@ import {
   querySearch,
   register,
   defaultImg } from "@/static/js/login";
+
 const {proxy} = getCurrentInstance()
 const router = useRouter()
 
