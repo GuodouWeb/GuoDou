@@ -72,33 +72,60 @@ function Add_Param() {
  * 增加请求头参数
  */
 function Add_HeadersParam() {
-    rq_info.parmas_imgShow = false;
+    rq_info.headers_imgShow = false;
     rq_info.headers.push({ key: "", value: "", desc: "" });
 }
 
 /**
  * 删除请求头参数
  */
-function Delete_HeadersParam(psramsItem) {
-    rq_info.headers = rq_info.headers.filter((item) => item != psramsItem);
+function Delete_HeadersParam(paramsItem) {
+    rq_info.headers = rq_info.headers.filter((item) => item != paramsItem);
     if (!rq_info.headers.length > 0) {
-        rq_info.parmas_imgShow = true;
+        rq_info.headers_imgShow = true;
     }
+}
+
+function GetBodyValue(proxy){
+    if(rq_info.infopage_seclet === 'none'){
+        return ""
+    }
+    return proxy.$refs.urlBody.getValue()
 }
 
 /**
  * 发送请求
  */
 function sendBtn(proxy){
+    if(rq_info.url === "" || rq_info.method === ""){
+        ElMessage({
+            showClose: true,
+            message: "请求路径或者请求方式为空",
+            type: "error",
+        });
+        return
+    }
     request(JSON.stringify({
         "url": rq_info.url,
         "method": rq_info.method,
-        "body": proxy.$refs.urlBody.getValue(),
+        "body": GetBodyValue(proxy),
         "header": res_info.headers
     })).then((res)=>{
             res_info.isShow=true
             console.log(res)
-            proxy.$refs.res_Editor.setJSONVal(JSON.stringify(res.data))
+            if(res.data.code === 110){
+                proxy.$refs.res_Editor.setHtmlVal(JSON.stringify(res.data.data.msg))
+                return
+            }
+            SetResHeader(res.data.data)
+            if(typeof res.data.data.response === "object"){
+                proxy.$refs.res_Editor.setJSONVal(JSON.stringify(res.data.data.response))
+                return;
+            }
+            if(typeof res.data.data.response === "string"){
+                proxy.$refs.res_Editor.setHtmlVal(res.data.data.response)
+            }
+
         })
         .catch(err=>{
             ElMessage({
@@ -107,7 +134,28 @@ function sendBtn(proxy){
                 type: "error",
                 duration:10000,
             })
+            console.log(err)
         })
+}
+
+/**
+ * 设置响应参数（响应头。cookie）
+ */
+function SetResHeader(res){
+    res_info.code = res.status_code;
+    res_info.time = res.elapsed;
+    const cookiesMap = new Map(Object.entries(res.cookies))
+    const headerMap = new Map(Object.entries(res.response_header))
+    headerMap.forEach((V,K)=>{
+        res_info.headers.push(
+            {key:K, value:V}
+        )
+    })
+    cookiesMap.forEach((V,K)=> {
+        res_info.Cookis.push(
+            {key: K, value: V}
+        )
+    })
 }
 
 export {Get_InputParams, Delet_Param, Add_Param, Add_HeadersParam ,Delete_HeadersParam, Set_Url, sendBtn}

@@ -100,7 +100,6 @@ form .params {
   align-items: center;
 }
 form .params div {
-  margin: 0 0 0 2px;
   width: 98%;
   display: flex;
 }
@@ -110,7 +109,8 @@ form .params :deep(.el-input__wrapper) {
 
 .add-parmas {
   width: 80%;
-  margin: 0 0 0 10px;
+  margin-top: 5px;
+  margin-left: 20px;
   justify-content: center;
   display: flex;
 }

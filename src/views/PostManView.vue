@@ -32,9 +32,9 @@
     <div class="rq-content">
       <div class="rq-infopage-seclet">
         <el-radio-group size="large" v-model="rq_info.infopage_seclet">
-          <el-radio-button label="params" />
-          <el-radio-button label="Headers" />
-          <el-radio-button label="Body" />
+          <el-radio label="params">params</el-radio>
+          <el-radio label="Headers">Headers</el-radio>
+          <el-radio label="Body">Body</el-radio>
         </el-radio-group>
       </div>
       <div class="rq-param">
@@ -49,47 +49,62 @@
         </div>
       </div>
     </div>
-    <div class="rq-response" v-show="res_info.isShow">
+    <div class="rq-response">
       <div class="res-infopage-seclet">
-        <el-radio-group size="large" v-model="res_info.infopage_seclet">
-          <el-radio-button label="Body" />
-          <el-radio-button label="Cookis" />
-          <el-radio-button label="Headers" />
+        <el-radio-group v-model="res_info.infopage_seclet">
+          <el-radio label="Body">Body</el-radio>
+          <el-radio label="Cookis">Cookis</el-radio>
+          <el-radio label="Headers">Headers</el-radio>
         </el-radio-group>
-        <div class="res-CodeAndTime">status: {{res_info.code}}   time: {{res_info.time}}</div>
+        <div class="res-CodeAndTime">
+          status: {{ res_info.code }} time: {{ res_info.time }}
+        </div>
       </div>
-      <div class="res-MonacoEditor" v-show="res_info.infopage_seclet === res_SetInpage.Body">
-        <MonacoEditor ref="res_Editor" :opts="opts" :height="300"/>
+      <div
+        class="res-MonacoEditor"
+        v-show="res_info.infopage_seclet === res_SetInpage.Body"
+      >
+        <MonacoEditor ref="res_Editor" :opts="postMan_ResOpts" :height="300" />
       </div>
-      <div v-show="res_info.infopage_seclet === res_SetInpage.Headers">
-        <UrlHeaders/>
+      <div
+        class="res-cookis"
+        v-show="res_info.infopage_seclet === res_SetInpage.Cookis"
+      >
+        <el-table :data="res_info.Cookis" height="300">
+          <el-table-column prop="key" label="Key" width="300" />
+          <el-table-column prop="value" label="Value" width="500" />
+        </el-table>
+      </div>
+      <div
+        class="res-headers"
+        v-show="res_info.infopage_seclet === res_SetInpage.Headers"
+      >
+        <el-table :data="res_info.headers" height="300">
+          <el-table-column prop="key" label="Key" width="300" />
+          <el-table-column prop="value" label="Value" width="500" />
+        </el-table>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from "@vue/reactivity";
 import { Upload } from "@element-plus/icons-vue";
 import {
   Get_InputParams,
   rq_info,
   res_info,
-  sendBtn
+  sendBtn,
 } from "@/static/js/PostMan";
 import {
   UrlParmas,
   UrlHeaders,
   UrlBody,
-  opts
+  postMan_ResOpts,
 } from "@/components/PostMan";
-
 import MonacoEditor from "@/components/Editor/monaco";
-import axios from "axios";
-import {getCurrentInstance} from "vue";
-import {ElMessage} from "element-plus";
+import { getCurrentInstance } from "vue";
 
-const rq_method = ref("GET");
 const rq_method_value = [
   {
     value: "GET",
@@ -114,42 +129,20 @@ const res_SetInpage = {
   Headers: "Headers",
   Body: "Body",
 };
-const {proxy} = getCurrentInstance()
-
-
-function postman(){
-  rq_info.data = proxy.$refs.urlBody.getValue()
-  axios
-      .get(rq_info.url, rq_info.data)
-      .then((res)=>{
-        res_info.isShow=true
-        console.log(res)
-        proxy.$refs.res_Editor.setJSONVal(JSON.stringify(res.data))
-      })
-      .catch(err=>{
-        ElMessage({
-          showClose: true,
-          message: err,
-          type: "error",
-          duration:10000,
-        })
-      })
-}
-
+const { proxy } = getCurrentInstance();
 </script>
-
-
 
 <style scoped>
 .postman-main {
   background-color: #fff;
   width: 100%;
   min-width: 500px;
-  min-height: 520px;
+  min-height: 800px;
   display: block;
   align-content: center;
   justify-content: center;
-  box-shadow: 0 0 20px #666;
+  box-shadow: 0 0 3px #666;
+  border-radius: 5px;
 }
 .postman-title {
   height: 60px;
@@ -161,7 +154,7 @@ function postman(){
 }
 .postman-title p {
   padding: 0 0 0 80px;
-  font-family: "Microsoft YaHei",serif;
+  font-family: "Microsoft YaHei", serif;
   font-weight: bold;
 }
 .route-search-box {
@@ -201,37 +194,70 @@ function postman(){
   margin-left: 80px;
   margin-bottom: 20px;
 }
-.rq-response{
+.rq-response {
   margin-top: 10px;
   margin-bottom: 30px;
   display: block;
 }
-.rq-response .res-MonacoEditor{
-  max-width: 1220px;
+.rq-response .res-MonacoEditor {
+  max-width: 1200px;
   margin-left: 80px;
   margin-top: 10px;
   margin-right: 50px;
-  border:1px solid #bbb7b7
+  border: 1px solid #bbb7b7;
 }
-.res-infopage-seclet{
+.rq-response .res-cookis {
+  max-width: 1200px;
+  margin-left: 80px;
+  margin-top: 10px;
+  margin-right: 50px;
+}
+.rq-response .res-cookis :deep(.el-table__body-wrapper) {
+  max-width: 820px;
+  text-align: left;
+  padding-left: 50px;
+}
+.rq-response .res-cookis :deep(.el-table__header-wrapper) {
+  padding-left: 50px;
+  border-top: 1px solid #bbb7b7;
+}
+.rq-response .res-headers {
+  max-width: 1200px;
+  margin-left: 80px;
+  margin-top: 10px;
+  margin-right: 50px;
+}
+.rq-response .res-headers :deep(.el-table__body-wrapper) {
+  max-width: 820px;
+  text-align: left;
+  padding-left: 50px;
+}
+.rq-response .res-headers :deep(.el-table__header-wrapper) {
+  border-top: 1px solid #bbb7b7;
+  padding-left: 50px;
+}
+.res-infopage-seclet {
   display: flex;
   max-width: 1200px;
   margin-left: 80px;
   margin-right: 50px;
   justify-content: left;
-  position: relative
+  align-content: center;
+  position: relative;
 }
-.res-infopage-seclet .res-CodeAndTime{
+.res-infopage-seclet .res-CodeAndTime {
   position: absolute;
-  bottom: 0;
-  right: 0;
+  bottom: 5px;
+  right: 0px;
 }
-.res-infopage-seclet :deep(.el-radio-group){
+.res-infopage-seclet :deep(.el-radio-group) {
   margin: 0;
   padding: 0;
 }
-.rq-response .res-CodeAndTime{
+.rq-response .res-CodeAndTime {
   text-align: right;
   justify-items: center;
+  font-size: 12px;
+  color: #42b983;
 }
 </style>

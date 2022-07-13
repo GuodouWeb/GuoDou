@@ -6,8 +6,9 @@ export const rq_info = reactive({
     method: "",
     params: [],
     headers: [],
-    data:"",
+    data:[],
     parmas_imgShow: true,
+    headers_imgShow: true,
 });
 export const res_info = reactive({
     isShow:false,
@@ -15,6 +16,5 @@ export const res_info = reactive({
     code:"",
     time:"",
     headers: [],
-    data:"",
     Cookis: []
 });

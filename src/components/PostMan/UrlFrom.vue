@@ -6,7 +6,7 @@
     <div>desc</div>
     <p>操作</p>
   </div>
-  <form v-for="item in UrlFrom_info.params" :key="item">
+  <form v-for="item in rq_info.data" :key="item">
     <div class="params">
       <div>
         <el-input v-model="item.key" placeholder="请输入" clearable></el-input>
@@ -26,9 +26,6 @@
       >
     </div>
   </form>
-  <div class="params-img-show" v-show="UrlFrom_info.parmas_imgShow">
-    <img class="params-img" :src="imgPath.params_background" />
-  </div>
   <div class="add-parmas">
     <el-button type="primary" plain @click="Add_Param"
     >添加参数</el-button
@@ -36,22 +33,19 @@
   </div>
 </template>
 
-<script setup>
+<script setup name="UrlFrom">
 import {
-  UrlFrom_info,
   Add_Param,
   Delete_Param
 } from "@/components/PostMan/UrlFromScript";
+import {
+  rq_info,
+} from "@/static/js/PostMan";
+import {onMounted} from "vue";
 
-const imgPath = {
-  params_background: require("@/static/img/postman/订阅.svg"),
-};
-
-defineProps({
-  rq_info:Object
-})
-
-
+onMounted(
+    Add_Param()
+)
 
 </script>
 

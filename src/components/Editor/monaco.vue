@@ -106,9 +106,23 @@ export default {
     getVal() {
       return this.monacoEditor.getValue();
     },
-    setJSONVal(value){
+    //修改当前编辑器实例的编程语言类型
+    ChangeLanguage(lang){
+      monaco.editor.setModelLanguage(monaco.editor.getModel(this.monacoEditor.getModel().uri), lang);
+    },
+    //自动格式化文本
+    FormatDocument(){
       this.monacoEditor.trigger('anyString', 'editor.action.formatDocument')
+    },
+    setJSONVal(value){
+      this.ChangeLanguage("json");
       this.monacoEditor.setValue(value)
+      this.FormatDocument()
+    },
+    setHtmlVal(value){
+      this.ChangeLanguage("html");
+      this.monacoEditor.setValue(value.replace(/^(\s|")+|(\s|")+$/g, ''))
+      this.FormatDocument()
     }
   },
 };

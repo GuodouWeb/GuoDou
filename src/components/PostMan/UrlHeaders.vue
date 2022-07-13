@@ -26,7 +26,7 @@
       >
     </div>
   </form>
-  <div class="params-img-show" v-show="rq_info.parmas_imgShow">
+  <div class="params-img-show" v-show="rq_info.headers_imgShow">
     <img class="params-img" :src="imgPath.params_background" />
   </div>
   <div class="add-parmas">
@@ -52,7 +52,7 @@ const imgPath = {
 <style scoped>
 .title {
   height: 20px;
-  margin: 20px 0 0 0;
+  margin: 10px 0 0 0;
   text-align: left;
 }
 .title p {
@@ -85,8 +85,8 @@ form {
   text-align: center;
 }
 .params-img {
-  width: 200px;
-  height: 200px;
+  width: 150px;
+  height: 150px;
 }
 form .params {
   width: 100%;
@@ -98,7 +98,7 @@ form .params {
   align-items: center;
 }
 form .params div {
-  margin: 0 0 0 2px;
+  margin: 0 0 0 0;
   width: 98%;
   display: flex;
 }
@@ -108,7 +108,8 @@ form .params :deep(.el-input__wrapper) {
 
 .add-parmas {
   width: 80%;
-  margin: 0 0 0 20px;
+  margin-top: 5px;
+  margin-left: 20px;
   justify-content: center;
   display: flex;
 }

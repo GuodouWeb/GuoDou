@@ -6,8 +6,9 @@
       :collapse="isCollapse"
       width="200 px"
       :router="true"
+      @mouseover="MouseOver"
     >
-      <div class="div-el-menu-title" >
+      <div class="div-el-menu-title">
         <p>GuoDou</p>
       </div>
 
@@ -34,15 +35,15 @@
       <div class="div-el-menu">
         <el-menu-item index="2">
           <ElIcon>
-          <el-icon><Document /></el-icon>
+            <el-icon><Document /></el-icon>
           </ElIcon>
           <template #title>Navigator Two </template>
         </el-menu-item>
-        <el-menu-item index="3" disabled>
+        <el-menu-item index="/project/test">
           <ElIcon>
-          <el-icon><document /></el-icon>
+            <el-icon><document /></el-icon>
           </ElIcon>
-          <template #title>Navigator Three </template>
+          <template #title>Test </template>
         </el-menu-item>
         <el-menu-item index="/project/postman">
           <ElIcon>
@@ -56,15 +57,13 @@
 </template>
 
 <script>
+import { Document } from "@element-plus/icons-vue";
 
-import {
-  Document,
-} from "@element-plus/icons-vue";
 // eslint-disable-next-line no-undef
 export default {
   name: "NavigationBar",
   props: {
-    isCollapse:{
+    isCollapse: {
       type: Boolean,
       default: false,
     },
@@ -73,13 +72,15 @@ export default {
     Document,
   },
   data() {
-    return {
-    };
+    return {};
   },
   methods: {
+    MouseOver(event) {
+      const expandButton = document.getElementsByClassName("expand-button")[0];
+      expandButton.style.visibility = "visible";
+    },
   },
-  mounted() {
-  },
+  mounted() {},
 };
 </script>
 
@@ -104,7 +105,7 @@ export default {
   align-items: center;
   border: 3px #f0f0f0;
 }
-.div-el-menu-title p{
+.div-el-menu-title p {
   margin-top: 20px;
 }
 

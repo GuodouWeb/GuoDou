@@ -6,6 +6,9 @@ const MonacoWebpackPlugin = require("monaco-editor-webpack-plugin");
 
 module.exports = defineConfig({
   transpileDependencies: true,
+  devServer: {
+    port: 8082,
+  },
   configureWebpack: {
     plugins: [
       // 饿了么插件
@@ -18,12 +21,14 @@ module.exports = defineConfig({
       }),
       // 网页代码编辑器插件
       new MonacoWebpackPlugin(),
-    ]
+    ],
   },
   // 文件资源可视化，用于分析占比大小
   chainWebpack: (config) => {
     if (process.env.use_analyzer) {
-      config.plugin("webpack-bundle-analyzer").use(require("webpack-bundle-analyzer").BundleAnalyzerPlugin);
+      config
+        .plugin("webpack-bundle-analyzer")
+        .use(require("webpack-bundle-analyzer").BundleAnalyzerPlugin);
     }
-  }
+  },
 });
