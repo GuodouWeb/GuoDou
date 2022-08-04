@@ -43,13 +43,13 @@
           <ElIcon>
             <el-icon><document /></el-icon>
           </ElIcon>
-          <template #title>Test </template>
+          <template #title>手机性能监控 </template>
         </el-menu-item>
         <el-menu-item index="/project/postman">
           <ElIcon>
             <el-icon><Document /></el-icon>
           </ElIcon>
-          <template #title>PostMan </template>
+          <template #title>接口调试工具 </template>
         </el-menu-item>
       </div>
     </el-menu>

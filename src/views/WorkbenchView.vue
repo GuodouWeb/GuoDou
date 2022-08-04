@@ -50,7 +50,6 @@
             <router-view></router-view>
           </div>
         </el-main>
-        <el-footer>Footer</el-footer>
       </el-container>
     </el-container>
   </div>
@@ -114,6 +113,7 @@ function PageSwitching(route_name) {
   display: flex;
   align-items: center;
   justify-content: center;
+  height: 100%;
 }
 :deep(.el-header) {
   display: flex;

@@ -1,80 +1,74 @@
-import { ElMessage } from "element-plus";
-import { get_Devices, get_Pkgname } from "@/services/performanceTest";
-import { reactive } from "vue";
+import * as echarts from "echarts/core";
+import {
+  TitleComponent,
+  ToolboxComponent,
+  TooltipComponent,
+  GridComponent,
+  DataZoomComponent,
+} from "echarts/components";
+import { LineChart } from "echarts/charts";
+import { UniversalTransition } from "echarts/features";
+import { CanvasRenderer } from "echarts/renderers";
 
-/**
- * 获取设备列表
- */
-function Get_DeviceList() {
-  get_Devices()
-    .then((res) => {
-      if (res.data.code === 200) {
-        if (res.data.msg.length === 0) {
-          ElMessage({
-            showClose: true,
-            message: "获取设备失败，请尝试重新连接adb",
-            type: "warning",
-          });
-        }
-      }
-    })
-    .catch((e) => {
-      ElMessage({
-        showClose: true,
-        message: `出现异常: ${e}`,
-        type: "erro",
-      });
-    });
-}
+export { init, GetEchart };
+
+//注册引入的组件
+echarts.use([
+  TitleComponent,
+  ToolboxComponent,
+  TooltipComponent,
+  GridComponent,
+  DataZoomComponent,
+  LineChart,
+  CanvasRenderer,
+  UniversalTransition,
+]);
 
 /**
  *
- * @param deviceID 设备id
+ *
+ * @param {Object} proptsEle html Ele
+ * @param {Object} option  Echart设置
  */
-function Get_PkgnameList(deviceID) {
-  get_Pkgname(deviceID)
-    .then((res) => {
-      if (res.data.code === 200) {
-        console.log("res.data.msg", res.data.msg);
-      }
-    })
-    .catch((e) => {
-      console.log("e", e);
-    });
+function init(proptsEle, option) {
+  let myChartObj = proptsEle.myChart;
+  const optionObj = option;
+  //设置折线图title
+  optionObj.title.text = proptsEle.name;
+  //设置折线图个性化颜色
+  // optionObj.series[0].areaStyle.color = EchartColor();
+
+  optionObj && myChartObj.setOption(optionObj);
+
+  window.onresize = function () {
+    myChartObj.resize();
+  };
 }
-// const messages = ref("");
-// let chatSocket;
-// chatSocket.onopen = function (e) {
-//   console.log("连接成功");
-// };
-// chatSocket.onmessage = function (e) {
-//   messages.value = JSON.parse(e.data);
-//   console.log("messages.value", messages.value);
-// };
-// function connect() {
-//   chatSocket = new WebSocket(
-//     "ws://127.0.0.1:8090/ws/api/performance_testing/mobile/boot/"
-//   );
-// }
-// function sendBtn() {
-//   chatSocket.send(
-//     JSON.stringify({
-//       message: {
-//         device: "3c2691fe",
-//         pkgname: "com.qiyi.video",
-//       },
-//     })
-//   );
-// }
-// function closeBtn() {
-//   chatSocket.send(
-//     JSON.stringify({
-//       message: {
-//         device: "3c2691fe",
-//         pkgname: "com.qiyi.video",
-//         stop: "stop",
-//       },
-//     })
-//   );
-// }
-export { Get_DeviceList, Get_PkgnameList };
+
+/**
+ * 返回填充颜色设置
+ * @returns
+ */
+function EchartColor() {
+  //LinearGradient(上，左，右，下, arr[])
+  return new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+    //offset: 位置0~1, color:颜色
+    //设置过渡色
+    {
+      offset: 0,
+      color: "rgb(77, 100, 255)",
+    },
+    {
+      offset: 0.3,
+      color: "rgba(57, 80, 255, 0.7)",
+    },
+    {
+      offset: 0.95,
+      color: "rgb(255, 255, 255)",
+    },
+  ]);
+}
+
+function GetEchart(ele) {
+  return echarts.init(ele, {});
+}

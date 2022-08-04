@@ -34,7 +34,7 @@ const routes = [
       {
         path: "/project/test",
         name: "test",
-        component: () => import("../views/AndroidAppPerformanceTestView.vue"),
+        component: () => import("../views/TestView.vue"),
       },
     ],
   },
